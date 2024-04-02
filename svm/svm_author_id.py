@@ -44,3 +44,5 @@ The Code Below solves that issue, So use this one
 # labels_train = labels_train[:int(len(labels_train)/100)]
 
 #########################################################
+print(f'The answer for prediction[10,26,50] are {pred[10],pred[26],pred[50]}')
+print(f'The number of prediction "Chris" is {pred.sum()}')
