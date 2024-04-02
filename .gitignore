@@ -11,3 +11,7 @@ my_feature_list.pkl
 .DS_Store
 __pycache__
 venv/
+tools/
+*.tar.gz
+final_project/
+feature_selection/
