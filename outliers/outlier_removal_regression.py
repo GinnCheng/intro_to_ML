@@ -36,23 +36,18 @@ try:
     plt.plot(ages, reg.predict(ages), color="blue")
 except NameError:
     pass
-plt.scatter(ages, net_worths)
-plt.show()
+plt.scatter(ages, net_worths, color='blue')
+# plt.show()
 
 
 ### identify and remove the most outlier-y points
-cleaned_data = []
+from intro_to_ML.outliers.outlier_cleaner import outlierCleaner
 try:
     predictions = reg.predict(ages_train)
     cleaned_data = outlierCleaner( predictions, ages_train, net_worths_train )
 except NameError:
     print("Your regression object doesn't exist, or isn't name reg")
     print("Can't make predictions to use in identifying outliers")
-
-
-
-
-
 
 
 ### only run this code if cleaned_data is returning data
@@ -64,12 +59,15 @@ if len(cleaned_data) > 0:
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
-        plt.plot(ages, reg.predict(ages), color="blue")
+        plt.plot(ages, reg.predict(ages), color="red")
+        print(f'The new slope and intercept of the train are {reg.coef_} and {reg.intercept_}')
+        print(f'The new score of the train is {reg.score(ages_train, net_worths_train)}')
+        print(f'The new score of the test is {reg.score(ages_test, net_worths_test)}')
     except NameError:
         print("You don't seem to have regression imported/created,")
         print("   or else your regression object isn't named reg")
         print("   either way, only draw the scatter plot of the cleaned data")
-    plt.scatter(ages, net_worths)
+    plt.scatter(ages, net_worths, color='red', alpha=0.5)
     plt.xlabel("ages")
     plt.ylabel("net worths")
     plt.show()
