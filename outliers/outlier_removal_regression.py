@@ -9,8 +9,8 @@ from outlier_cleaner import outlierCleaner
 
 
 ### load up some practice data with outliers in it
-ages = joblib.load( open("./outliers/practice_outliers_ages.pkl", "rb") )
-net_worths = joblib.load( open("./outliers/practice_outliers_net_worths.pkl", "rb") )
+ages = joblib.load( open("../outliers/practice_outliers_ages.pkl", "rb") )
+net_worths = joblib.load( open("../outliers/practice_outliers_net_worths.pkl", "rb") )
 
 
 
@@ -25,15 +25,12 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 
 ### fill in a regression here!  Name the regression object reg so that
 ### the plotting code below works, and you can see what your regression looks like
-
-
-
-
-
-
-
-
-
+from sklearn.linear_model import LinearRegression
+reg = LinearRegression()
+reg.fit(ages_train, net_worths_train)
+print(f'The slope and intercept of the train are {reg.coef_} and {reg.intercept_}')
+print(f'The score of the train is {reg.score(ages_train, net_worths_train)}')
+print(f'The score of the test is {reg.score(ages_test, net_worths_test)}')
 
 try:
     plt.plot(ages, reg.predict(ages), color="blue")
