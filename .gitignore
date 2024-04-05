@@ -17,3 +17,5 @@ final_project/
 feature_selection/
 */*.png
 *.png
+*.pdf
+*/*.pdf
