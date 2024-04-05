@@ -40,36 +40,45 @@ print(data_dict['TOTAL'].keys())
 data_dict.pop("TOTAL", 0)
 
 ## check the maximum and minimum values of exercised_stock_options
-exercised_stock_options = []
-for name in data_dict.keys():
-    tmp = data_dict[name]['exercised_stock_options']
-    if type(tmp) in [int, float]:
-        exercised_stock_options.append(tmp)
-print(f'The max and min of exercised stock options is {max(exercised_stock_options)},{min(exercised_stock_options)}')
-
-salary = []
-for name in data_dict.keys():
-    tmp = data_dict[name]['salary']
-    if type(tmp) in [int, float]:
-        salary.append(tmp)
-print(f'The max and min of salary is {max(salary)},{min(salary)}')
+# exercised_stock_options = []
+# for name in data_dict.keys():
+#     tmp = data_dict[name]['exercised_stock_options']
+#     if type(tmp) in [int, float]:
+#         exercised_stock_options.append(tmp)
+# print(f'The max and min of exercised stock options is {max(exercised_stock_options)},{min(exercised_stock_options)}')
+#
+# salary = []
+# for name in data_dict.keys():
+#     tmp = data_dict[name]['salary']
+#     if type(tmp) in [int, float]:
+#         salary.append(tmp)
+# print(f'The max and min of salary is {max(salary)},{min(salary)}')
 
 ### the input features we want to use
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
-# feature_1 = "salary"
+feature_1 = "salary"
 # feature_2 = "exercised_stock_options"
-# feature_3 = 'total_payments'
-# poi  = "poi"
-# features_list = [poi, feature_1, feature_2, feature_3]
-# data = featureFormat(data_dict, features_list )
-# poi, finance_features = targetFeatureSplit( data )
-#
-#
+feature_2 = 'from_messages'
+poi  = "poi"
+features_list = [poi, feature_1, feature_2]
+data = featureFormat(data_dict, features_list )
+
+### apply scaler
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+print(min(data[:,2]),max(data[:,2]))
+scaler = MinMaxScaler()
+scaler.fit(data[:,1:])
+
+### split the data for training
+poi, finance_features = targetFeatureSplit( data )
+
+
 # ### in the "clustering with 3 features" part of the mini-project,
 # ### you'll want to change this line to
 # ### for f1, f2, _ in finance_features:
 # ### (as it's currently written, the line below assumes 2 features)
-# for f1, f2, _ in finance_features:
+# for f1, f2 in finance_features:
 #     plt.scatter( f1, f2 )
 # plt.show()
 #
