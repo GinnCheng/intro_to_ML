@@ -33,9 +33,10 @@ def parseOutText(f):
         ### split the text string into individual words, stem each word,
         ### and append the stemmed word to words (make sure there's a single
         ### space between each stemmed word)
-        text_string = text_string.strip().split(' ')
+        text_string = text_string.replace('\n',' ').strip().split(' ')
         snowball_stemmer = SnowballStemmer(language='english')
-        text_string = [snowball_stemmer.stem(w) for w in text_string if w != '']
+        text_string = [snowball_stemmer.stem(w.strip('\n')) for w in text_string if w != '']
+        # print(text_string)
         words += ' '.join(text_string)
 
     return words
