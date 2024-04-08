@@ -5,6 +5,7 @@ import joblib
 import re
 import sys
 import os
+import numpy as np
 
 sys.path.append(os.path.abspath("../tools/"))
 from parse_out_email_text import parseOutText
@@ -43,7 +44,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         ### once everything is working, remove this line to run over full dataset
         temp_counter += 1
 
-        if temp_counter < 200:
+        if temp_counter < 200000:
             path = os.path.join('../tools', path[:-1])
             # print(path)
             email = open(path, "r")
@@ -51,10 +52,8 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             email_text = parseOutText(email)
             ### use str.replace() to remove any instances of the words
 	        ### ["sara", "shackleton", "chris", "germani"]
-            for tmp_word in ["\n"]:
-                email_text = email_text.replace(tmp_word.capitalize(), '')
+            for tmp_word in ["sara", "shackleton", "chris", "germani"]:
                 email_text = email_text.replace(tmp_word, '')
-                email_text = email_text.strip()
 
             ### append the text to word_data
             word_data.append(email_text)
@@ -73,8 +72,16 @@ print("Emails Processed")
 from_sara.close()
 from_chris.close()
 
-joblib.dump( word_data, open("your_word_data.pkl", "wb") )
-joblib.dump( from_data, open("your_email_authors.pkl", "wb") )
+## check the data
+# print(from_data[152])
+# print(word_data[152])
+
+# joblib.dump( word_data, open("your_word_data.pkl", "wb") )
+# joblib.dump( from_data, open("your_email_authors.pkl", "wb") )
 
 
 ### in Part 4, do TfIdf vectorization here
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer(stop_words='english')
+features_text = vectorizer.fit_transform(word_data)
+# print(len(vectorizer.get_feature_names_out()[34598]))
